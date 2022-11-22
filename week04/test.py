@@ -1,6 +1,4 @@
-time = [[0]] * (6)
+N = 5
+temp = [1 for i in range(0, N)]
 
-print(time, type(time[1]))
-
-for i in len(time[1]) : 
-    print(time[1][i])
+print(temp)
