@@ -13,6 +13,7 @@ for t in range(T) :
 
     # 서류 순서대로 정렬하기 
     people.sort(key=lambda x : x[0])
+    # print(people)
     
     count = N
     youMustWin = N + 1     # 면접 꼴찌
