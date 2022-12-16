@@ -1,27 +1,34 @@
 import sys
 input = sys.stdin.readline
-import heapq
+from queue import deque
 
 # Char number N, risable lv sum K
 N, K = map(int, input().split())
 
-charList = []
+tempList = []
 for _ in range(N) : 
-    heapq.heappush(charList, int(input()))
+    tempList.append(int(input()))
+    
+charList = deque(sorted(tempList))
 
-nowMin = []    
 while K : 
-    nowMin.append(heapq.heappop(charList))
-    if charList[0] == nowMin[0] : 
-        nowMin.append(heapq.heappop(charList))
+    minList = []
+    minList.append(charList.popleft())
+    while minList[0] == charList[0] : 
+        minList.append(charList.popleft())
     
-    howMany = len(nowMin)    
-    diff = charList[0] - nowMin[0]
-    
-    if diff > K : 
-        for m in range(howMany - 1) : 
-            heapq.heappush(charList, nowMin[m] + (K // howMany))
-        heapq.heappush(charList, nowMin[howMany - 1] + K // howMany + K % howMany)
-    else : # 0 < diff < K
+    diff = charList[0] - minList[0]     # charList 다음 작은 원소와의 차이 
+    howMany = len(minList)
+    if diff * howMany > K : 
+        minList[0] += K // howMany
+        print(minList[0])
+        exit()
+    else :      # diff * howMany < K
+        minList = list(map(lambda x : x + diff, minList))
+        K -= diff * howMany
+        for m in range(howMany) : 
+            charList.appendleft(minList[m])
+
         
-print()
+    
+        
